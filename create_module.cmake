@@ -21,7 +21,7 @@ function(create_module)
         target_include_directories("${MODULE_NAME}" INTERFACE "${module_interface}")
     endif()
 
-    target_link_libraries("${MODULE_NAME}" ${_DEPEND})
+    target_link_libraries("${MODULE_NAME}" PRIVATE ${_DEPEND})
 
     set("${MODULE_NAME}_DEPEND")
 
