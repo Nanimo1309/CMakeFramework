@@ -23,7 +23,7 @@ function(create_module)
 
     target_link_libraries("${MODULE_NAME}" PRIVATE ${_DEPEND})
 
-    set("${MODULE_NAME}_DEPEND")
+    set("${MODULE_NAME}_DEPEND" ${_DEPEND})
 
     if(BUILD_TESTING AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests")
         add_subdirectory(tests)
