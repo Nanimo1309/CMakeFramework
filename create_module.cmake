@@ -7,6 +7,8 @@ function(create_module)
     file(MAKE_DIRECTORY "${module_interface}")
     execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink "${CMAKE_CURRENT_SOURCE_DIR}/include" "${module_interface}/${MODULE_NAME}")
 
+    string(REPLACE " " "_" MODULE_NAME ${MODULE_NAME})
+
     set(module_include "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
     if(_SOURCE)
@@ -14,16 +16,15 @@ function(create_module)
 
         list(TRANSFORM _SOURCE PREPEND "${module_src}/")
 
-        add_library("${MODULE_NAME}" ${_SOURCE})
-        target_include_directories("${MODULE_NAME}" INTERFACE "${module_interface}" PRIVATE "${module_include}" "${module_src}")
+        add_library(${MODULE_NAME} ${_SOURCE})
+        target_include_directories(${MODULE_NAME} INTERFACE "${module_interface}" PRIVATE "${module_include}" "${module_src}")
     else()
-        add_library("${MODULE_NAME}" INTERFACE)
-        target_include_directories("${MODULE_NAME}" INTERFACE "${module_interface}")
+        add_library(${MODULE_NAME} INTERFACE)
+        target_include_directories(${MODULE_NAME} INTERFACE "${module_interface}")
     endif()
 
-    target_link_libraries("${MODULE_NAME}" PRIVATE ${_DEPEND})
-
-    set("${MODULE_NAME}_DEPEND" ${_DEPEND})
+    set(${MODULE_NAME}_DEPEND ${_DEPEND})
+    target_link_libraries(${MODULE_NAME} PRIVATE ${_DEPEND})
 
     if(BUILD_TESTING AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/tests")
         add_subdirectory(tests)
