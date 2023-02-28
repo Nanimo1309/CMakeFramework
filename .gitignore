@@ -2,21 +2,4 @@
 
 !.gitignore
 !CMakeLists.txt
-
-!include
-!**/include/**/
-!src
-!**/src/**/
-!tests
-!**/tests/**/
-
-!*.hpp
-!*.cpp
 !*.cmake
-!*.hpp.in
-
-!/README.md
-
-!/cmake
-!/Main
-!/Common
