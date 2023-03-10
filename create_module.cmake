@@ -30,3 +30,4 @@ function(create_module)
         add_subdirectory(tests)
     endif()
 endfunction()
+
