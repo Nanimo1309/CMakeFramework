@@ -18,11 +18,11 @@ function(create_module)
     endif()
 
     if(_UNPARSED_ARGUMENTS)
-        message(WARNING "In ${module_name} module unrecognized argument given: ${_UNPARSED_ARGUMENTS}")
+        message(SEND_ERROR "In ${module_name} module unrecognized argument given: ${_UNPARSED_ARGUMENTS}")
     endif()
 
     if(_KEYWORDS_MISSING_VALUES)
-        message(WARNING "In ${module_name} module ${_KEYWORDS_MISSING_VALUES} given with no value")
+        message(SEND_ERROR "In ${module_name} module ${_KEYWORDS_MISSING_VALUES} given with no value")
     endif()
 
     set(module_include "${CMAKE_CURRENT_SOURCE_DIR}/include")
