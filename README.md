@@ -23,22 +23,20 @@ To add header from other module you must also specify its name
 
 ## Project structure (Check sampleProject directory)
     ├── CMakeLists.txt
-    ├── CMakeFramework
-    |   └── ...
-    ├── HeadersModule
+    ├── Headers
     |   ├── CMakeLists.txt
     |   └── include
-    |       ├── Header.hpp
-    |       ├── OtherHeader.hpp
-    |       └── AnotherHeader.hpp
-    ├── SomeModule
+    |       ├── cout.hpp
+    |       ├── string.hpp
+    |       └── vector.hpp
+    ├── Module
     |   ├── CMakeLists.txt
     |   ├── include
-    |   |   ├── Class.hpp
-    |   |   └── OtherClass.hpp
+    |   |   ├── Display.hpp
+    |   |   └── User.hpp
     |   └── src
-    |       ├── SomeClass.cpp
-    |       └── SomeOtherClass.cpp
+    |       ├── Display.cpp
+    |       └── User.cpp
     └── MainModule
         ├── CMakeLists.txt
         ├── include
