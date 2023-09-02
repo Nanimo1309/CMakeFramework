@@ -18,10 +18,11 @@ function(add_ut)
 
         target_include_directories(${module_name}_UT PRIVATE "${module_include}" "${module_src}")
 
+
         set(testfile_dir ${CMAKE_CURRENT_BINARY_DIR})
         file(WRITE ${testfile_dir}/CTestTestfile.cmake "include(\"${testfile_dir}/${module_name}_UT[1]_include.cmake\")\n")
 
-        while(NOT ${CMAKE_BINARY_DIR} STREQUAL ${testfile_dir})
+        while(NOT ${PROJECT_BINARY_DIR} STREQUAL ${testfile_dir})
             get_filename_component(testfile_content ${testfile_dir} NAME)
             set(testfile_command "subdirs(\"${testfile_content}\")\n")
 

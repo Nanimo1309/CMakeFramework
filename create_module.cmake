@@ -58,10 +58,6 @@ function(create_module)
         endif()
     endif()
 
-    if(CREATE_EXECUTABLE)
-        target_link_libraries(${PROJECT_NAME} PRIVATE ${module_name})
-    endif()
-
     if(BUILD_TESTING AND IS_DIRECTORY "${module_tests}")
         add_subdirectory(tests)
     endif()

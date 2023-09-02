@@ -7,6 +7,6 @@ FetchContent_Declare(
     GIT_SHALLOW TRUE
 )
 
-set(INSTALL_GTEST OFF)
+set_target_properties(GTest PROPERTIES INSTALL_GTEST NO)
 
 FetchContent_MakeAvailable(GTest)

@@ -1,5 +1,0 @@
-if(CREATE_EXECUTABLE)
-    file(WRITE "${CMAKE_BINARY_DIR}/null.cpp")
-    set(RUTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
-    add_executable(${PROJECT_NAME} "${CMAKE_BINARY_DIR}/null.cpp")
-endif()
