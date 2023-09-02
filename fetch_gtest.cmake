@@ -10,4 +10,3 @@ FetchContent_Declare(
 set(INSTALL_GTEST OFF)
 
 FetchContent_MakeAvailable(GTest)
-
