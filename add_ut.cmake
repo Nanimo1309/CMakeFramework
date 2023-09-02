@@ -1,5 +1,5 @@
 function(add_ut)
-    cmake_parse_arguments("" "" "" "SOURCE;DEPEND" ${ARGN})
+    cmake_parse_arguments("" "" "" "SOURCE;DEPS" ${ARGN})
 
     if(_UNPARSED_ARGUMENTS)
         message(SEND_ERROR "In ${module_name}_UT module unrecognized argument given: ${_UNPARSED_ARGUMENTS}")
@@ -11,7 +11,7 @@ function(add_ut)
 
     if(_SOURCE)
         add_executable(${module_name}_UT ${_SOURCE})
-        target_link_libraries(${module_name}_UT PRIVATE GTest::gtest_main ${module_name} ${module_depend} ${_DEPEND})
+        target_link_libraries(${module_name}_UT PRIVATE GTest::gtest_main ${module_name} ${module_depend} ${_DEPS})
 
         include(GoogleTest)
         gtest_discover_tests(${module_name}_UT)
@@ -41,5 +41,7 @@ function(add_ut)
 
             file(APPEND ${testfile} "${testfile_command}")
         endwhile()
+    else()
+        message(FATAL_ERROR "No sources provided in ${module_name} module")
     endif()
 endfunction()

@@ -1,0 +1,9 @@
+create_module(
+    EXE
+    SOURCE
+        main.cpp
+        MainClass.cpp
+    DEPS
+        Headers
+        Module
+)

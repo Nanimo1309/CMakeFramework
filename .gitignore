@@ -1,6 +1,11 @@
 **
 
 !.gitignore
+!README.md
 !CMakeLists.txt
 !*.cmake
 
+!/sampleProject
+!/sampleProject/**/
+!/sampleProject/**/*.hpp
+!/sampleProject/**/*.cpp
