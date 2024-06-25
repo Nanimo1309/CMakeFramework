@@ -31,7 +31,7 @@ function(create_module)
     set(module_tests "${CMAKE_CURRENT_SOURCE_DIR}/test")
     set(module_depend ${_DEPS})
 
-    if(IS_DIRECTORY "${module_include}" AND NOT _EXE)
+    if(IS_DIRECTORY "${module_include}")
         file(MAKE_DIRECTORY "${module_interface}")
         execute_process(COMMAND "${CMAKE_COMMAND}" -E create_symlink "${module_include}" "${module_interface}/${module_name}")
     endif()
