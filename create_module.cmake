@@ -9,6 +9,12 @@ function(create_module)
 
     set(module_name ${module_name} PARENT_SCOPE)
 
+    if(module_parents)
+        set(module_parents "${module_parents}${module_name}/" PARENT_SCOPE)
+    else()
+        set(module_parents "${module_name}/" PARENT_SCOPE)
+    endif()
+
     if(_SHARED AND _EXE)
         message(FATAL_ERROR "In ${module_name} module both SHARED and EXE options given")
     elseif(_SHARED)
@@ -26,7 +32,7 @@ function(create_module)
     endif()
 
     set(module_include "${CMAKE_CURRENT_SOURCE_DIR}/include")
-    set(module_interface "${CMAKE_CURRENT_BINARY_DIR}/module_interface")
+    set(module_interface "${CMAKE_CURRENT_BINARY_DIR}/module_interface/${module_parents}")
     set(module_src "${CMAKE_CURRENT_SOURCE_DIR}/src")
     set(module_tests "${CMAKE_CURRENT_SOURCE_DIR}/test")
     set(module_depend ${_DEPS})
