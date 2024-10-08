@@ -11,10 +11,12 @@ function(create_module)
 
     if(module_parents)
         set(module_parents "${module_parents};${module_name}" PARENT_SCOPE)
-        set(module_target "${module_target}::${module_name}")
+        string(JOIN "::" module_target ${module_parents} "${module_name}")
+        string(JOIN "_" module_real_name ${module_parents} "${module_name}")
     else()
         set(module_parents "${module_name}" PARENT_SCOPE)
         set(module_target "${module_name}")
+        set(module_real_name "${module_name}")
     endif()
 
     set(module_target "${module_target}" PARENT_SCOPE)
@@ -41,7 +43,7 @@ function(create_module)
     set(module_depend ${_DEPS})
 
     set(module_interface "${CMAKE_CURRENT_BINARY_DIR}/module_interface")
-    string(JOIN "/" module_interface "${module_interface}" "${module_parents}")
+    string(JOIN "/" module_interface "${module_interface}" ${module_parents})
 
     if(IS_DIRECTORY "${module_include}")
         file(MAKE_DIRECTORY "${module_interface}")
@@ -55,30 +57,38 @@ function(create_module)
 
         list(TRANSFORM _SOURCE PREPEND "${module_src}/")
 
-        add_library(${module_target} ${module_linking} ${_SOURCE})
+        add_library(${module_real_name} ${module_linking} ${_SOURCE})
+
+        if(module_parents)
+            add_library(${module_target} ALIAS ${module_real_name})
+        endif()
 
         if(NOT IS_DIRECTORY "${module_include}" AND NOT _EXE)
             message(FATAL_ERROR "Source given in ${module_target} module but there's no /include directory")
         endif()
 
-        target_include_directories(${module_target} INTERFACE "${module_interface}" PRIVATE "${module_include}" "${module_src}")
-        target_link_libraries(${module_target} PRIVATE ${module_depend})
+        target_include_directories(${module_real_name} INTERFACE "${module_interface}" PRIVATE "${module_include}" "${module_src}")
+        target_link_libraries(${module_real_name} PRIVATE ${module_depend})
 
         if(_EXE)
             file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/null.cpp")
-            add_executable(${module_target}_EXE "${CMAKE_CURRENT_BINARY_DIR}/null.cpp")
-            target_link_libraries(${module_target}_EXE PRIVATE ${module_target})
-            set_target_properties(${module_target}_EXE PROPERTIES OUTPUT_NAME ${module_name})
+            add_executable(${module_real_name}_EXE "${CMAKE_CURRENT_BINARY_DIR}/null.cpp")
+            target_link_libraries(${module_real_name}_EXE PRIVATE ${module_target})
+            set_target_properties(${module_real_name}_EXE PROPERTIES OUTPUT_NAME ${module_name})
         endif()
     else()
         if(_EXE)
             message(FATAL_ERROR "No sources given in ${module_target} executve module")
         endif()
 
-        add_library(${module_target} INTERFACE)
+        add_library(${module_real_name} INTERFACE)
+
+        if(module_parents)
+            add_library(${module_target} ALIAS ${module_real_name})
+        endif()
 
         if(IS_DIRECTORY "${module_include}")
-            target_include_directories(${module_target} INTERFACE "${module_interface}")
+            target_include_directories(${module_real_name} INTERFACE "${module_interface}")
         endif()
     endif()
 

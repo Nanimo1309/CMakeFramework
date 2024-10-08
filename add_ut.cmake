@@ -10,14 +10,13 @@ function(add_ut)
     endif()
 
     if(_SOURCE)
-        add_executable(${module_target}_UT ${_SOURCE})
-        target_link_libraries(${module_target}_UT PRIVATE GTest::gtest_main ${module_target} ${module_depend} ${_DEPS})
+        add_executable(${module_real_name}_UT ${_SOURCE})
+        target_link_libraries(${module_real_name}_UT PRIVATE GTest::gtest_main ${module_target} ${module_depend} ${_DEPS})
 
         include(GoogleTest)
-        gtest_discover_tests(${module_target}_UT)
+        gtest_discover_tests(${module_real_name}_UT)
 
-        target_include_directories(${module_target}_UT PRIVATE "${module_include}" "${module_src}")
-
+        target_include_directories(${module_real_name}_UT PRIVATE "${module_include}" "${module_src}")
 
         set(testfile_dir ${CMAKE_CURRENT_BINARY_DIR})
         file(WRITE ${testfile_dir}/CTestTestfile.cmake "include(\"${testfile_dir}/${module_name}_UT[1]_include.cmake\")\n")
@@ -29,6 +28,7 @@ function(add_ut)
             get_filename_component(testfile_dir ${testfile_dir} DIRECTORY)
 
             set(testfile "${testfile_dir}/CTestTestfile.cmake")
+
             if(EXISTS "${testfile}")
                 file(READ "${testfile}" testfile_current)
 
