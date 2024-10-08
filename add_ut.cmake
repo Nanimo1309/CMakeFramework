@@ -2,21 +2,21 @@ function(add_ut)
     cmake_parse_arguments("" "" "" "SOURCE;DEPS" ${ARGN})
 
     if(_UNPARSED_ARGUMENTS)
-        message(SEND_ERROR "In ${module_name}_UT module unrecognized argument given: ${_UNPARSED_ARGUMENTS}")
+        message(SEND_ERROR "In ${module_target}_UT module unrecognized argument given: ${_UNPARSED_ARGUMENTS}")
     endif()
 
     if(_KEYWORDS_MISSING_VALUES)
-        message(SEND_ERROR "In ${module_name}_UT module ${_KEYWORDS_MISSING_VALUES} given with no value")
+        message(SEND_ERROR "In ${module_target}_UT module ${_KEYWORDS_MISSING_VALUES} given with no value")
     endif()
 
     if(_SOURCE)
-        add_executable(${module_name}_UT ${_SOURCE})
-        target_link_libraries(${module_name}_UT PRIVATE GTest::gtest_main ${module_name} ${module_depend} ${_DEPS})
+        add_executable(${module_target}_UT ${_SOURCE})
+        target_link_libraries(${module_target}_UT PRIVATE GTest::gtest_main ${module_target} ${module_depend} ${_DEPS})
 
         include(GoogleTest)
-        gtest_discover_tests(${module_name}_UT)
+        gtest_discover_tests(${module_target}_UT)
 
-        target_include_directories(${module_name}_UT PRIVATE "${module_include}" "${module_src}")
+        target_include_directories(${module_target}_UT PRIVATE "${module_include}" "${module_src}")
 
 
         set(testfile_dir ${CMAKE_CURRENT_BINARY_DIR})
@@ -42,6 +42,6 @@ function(add_ut)
             file(APPEND ${testfile} "${testfile_command}")
         endwhile()
     else()
-        message(FATAL_ERROR "No sources provided in ${module_name} module")
+        message(FATAL_ERROR "No sources provided in ${module_target}_UT module")
     endif()
 endfunction()
