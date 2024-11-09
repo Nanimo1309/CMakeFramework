@@ -15,13 +15,20 @@ Framework consists of only two functions for creating projects with C/C++
     Create google tests
     Links gtest_main, module, module dopendencies and DEPS (in this order)
 
+## Add to main CMakeLists.txt
+```cmake
+include(FetchContent)
+FetchContent_Declare(CMakeFramework GIT_REPOSITORY https://github.com/Nanimo1309/CMakeFramework GIT_TAG main GIT_SHALLOW true)
+FetchContent_MakeAvailable(CMakeFramework)
+```
+
 ### Including headers
 To add header from other module you must also specify its name
 ```cpp
 #include <Module/Header.hpp>
 ```
 
-## Project structure (Check sampleProject directory)
+## Sample project structure
     ├── CMakeLists.txt
     ├── Headers
     |   ├── CMakeLists.txt
