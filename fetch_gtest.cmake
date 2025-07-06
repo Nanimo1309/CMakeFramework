@@ -9,4 +9,6 @@ FetchContent_Declare(
 
 set(INSTALL_GTEST NO)
 
+add_compile_options(-w)
+
 FetchContent_MakeAvailable(GTest)
