@@ -2,7 +2,7 @@
 
 Framework consists of only two functions for creating projects with C/C++
 
-#### create_module( [ SOURCE &ltfiles&gt ] [ DEPS &ltmodules and libs&gt ] [ SHARED | EXE ] )
+#### create_module( [ SOURCE <files> ] [ DEPS <modules and libs> ] [ SHARED | EXE ] )
   
     Create module (library)
     Name of the module is the name of the directory (you can get it by ${module_name})
@@ -10,7 +10,7 @@ Framework consists of only two functions for creating projects with C/C++
     If tests dir exists adds it
     If EXE option is specified executable with module_name is added
     
-#### add_ut( SOURCE &ltfiles& [ DEPS &ltadditional modules and libs&gt ] )
+#### add_ut( SOURCE <files> [ DEPS <additional modules and libs> ] )
 
     Create google tests
     Links gtest_main, module, module dopendencies and DEPS (in this order)
@@ -29,15 +29,15 @@ To add header from other module you must also specify its name
 ```
 
 ## Sample project structure
-    ├── CMakeLists.txt
+    ├── CMakeLists.txt // <CMakeFramework fetch> add_submodule(Headers) add_submodule(Module) add_submodule(MainModule)
     ├── Headers
-    |   ├── CMakeLists.txt
+    |   ├── CMakeLists.txt // create_module()
     |   └── include
     |       ├── cout.hpp
     |       ├── string.hpp
     |       └── vector.hpp
     ├── Module
-    |   ├── CMakeLists.txt
+    |   ├── CMakeLists.txt // create_module(SOURCE Display.cpp User.cpp DEPS Headers)
     |   ├── include
     |   |   ├── Display.hpp
     |   |   └── User.hpp
@@ -45,11 +45,11 @@ To add header from other module you must also specify its name
     |       ├── Display.cpp
     |       └── User.cpp
     └── MainModule
-        ├── CMakeLists.txt
+        ├── CMakeLists.txt // create_module(SOURCE MainClass.cpp DEPS Headers Module)
         ├── include
         |   └── MainClass.hpp
         ├── src
         |   └── MainClass.cpp
         └── tests
-            ├── CMakeLists.txt
+            ├── CMakeLists.txt // add_ut(SOURCE mainClassTests.cpp)
             └── MainClassTests.cpp
